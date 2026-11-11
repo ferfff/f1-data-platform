@@ -9,9 +9,10 @@ import { SeasonsModule } from './seasons/seasons.module';
 import { RacesModule } from './races/races.module';
 import { ResultsModule } from './results/results.module';
 import { RaceSessionsModule } from './race-sessions/race-sessions.module';
+import { DriverTeamSeasonsModule } from './driver-team-seasons/driver-team-seasons.module';
 
 @Module({
-  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule, RacesModule, ResultsModule, RaceSessionsModule],
+  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule, RacesModule, ResultsModule, RaceSessionsModule, DriverTeamSeasonsModule],
   controllers: [AppController],
   providers: [AppService],
 })
