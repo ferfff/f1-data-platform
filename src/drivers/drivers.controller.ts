@@ -6,6 +6,7 @@ import {
     Query,
 } from '@nestjs/common';
 import { DriversService } from './drivers.service';
+import { FindDriversDto } from './dto/find-drivers.dto';
 
 @Controller('drivers')
 export class DriversController {
