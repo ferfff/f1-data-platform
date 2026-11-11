@@ -1,6 +1,7 @@
 import { jest } from '@jest/globals';
 import { DriversService } from './drivers.service';
 import { DriversController } from './drivers.controller';
+import { FindDriversDto } from './dto/find-drivers.dto';
 
 describe('DriversController', () => {
   let controller: DriversController;
@@ -31,12 +32,27 @@ describe('DriversController', () => {
   });
 
    describe('findAll', () => {
-    it('should return all drivers from the service', async () => {
-      findAllMock.mockImplementation(async () => [driver]);
+    it('should return paginated drivers from the service', async () => {
+      const query: FindDriversDto = {
+        page: 1,
+        limit: 20,
+      };
 
-      await expect(controller.findAll()).resolves.toEqual([driver]);
+      const response = {
+        data: [driver],
+        meta: {
+          total: 1,
+          page: 1,
+          limit: 20,
+          totalPages: 1,
+        },
+      };
 
-      expect(findAllMock).toHaveBeenCalledTimes(1);
+      findAllMock.mockImplementation(async () => response);
+
+      await expect(controller.findAll(query)).resolves.toEqual(response);
+
+      expect(findAllMock).toHaveBeenCalledWith(query);
     });
   });
 

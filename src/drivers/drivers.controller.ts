@@ -3,6 +3,7 @@ import {
     Get,
     Param,
     ParseIntPipe,
+    Query,
 } from '@nestjs/common';
 import { DriversService } from './drivers.service';
 
@@ -11,8 +12,8 @@ export class DriversController {
     constructor(private readonly driversService: DriversService) {}
 
     @Get()
-    findAll() {
-        return this.driversService.findAll();
+    findAll(@Query() query: FindDriversDto) {
+        return this.driversService.findAll(query);
     }
 
     @Get(':id')

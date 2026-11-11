@@ -2,17 +2,20 @@ import { jest } from '@jest/globals';
 import { NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { DriversService } from './drivers.service';
+import { FindDriversDto } from './dto/find-drivers.dto';
 
 describe('DriversService', () => {
   let service: DriversService;
 
   const findManyMock = jest.fn();
   const findUniqueMock = jest.fn();
+  const countMock = jest.fn();
 
   const prismaMock = {
     driver: {
       findMany: findManyMock,
       findUnique: findUniqueMock,
+      count: countMock,
     },
   } as unknown as PrismaService;
 
@@ -30,21 +33,36 @@ describe('DriversService', () => {
   beforeEach(() => {
     findManyMock.mockReset();
     findUniqueMock.mockReset();
+    countMock.mockReset();
     service = new DriversService(prismaMock);
   });
 
   describe('findAll', () => {
-    it('should return all drivers ordered by last name and first name', async () => {
+    it('should return paginated drivers', async () => {
+      const query: FindDriversDto = {
+        page: 1,
+        limit: 20,
+      };
+
       findManyMock.mockImplementation(async () => [driver]);
+      countMock.mockImplementation(async () => 1);
 
-      await expect(service.findAll()).resolves.toEqual([driver]);
-
-      expect(findManyMock).toHaveBeenCalledWith({
-        orderBy: [
-          { lastName: 'asc' },
-          { firstName: 'asc' }
-        ]
+      await expect(service.findAll(query)).resolves.toEqual({
+        data: [driver],
+        meta: {
+          total: 1,
+          page: 1,
+          limit: 20,
+          totalPages: 1,
+        },
       });
+
+      expect(findManyMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          skip: 0,
+          take: 20,
+        }),
+      );
     });
   });
 
