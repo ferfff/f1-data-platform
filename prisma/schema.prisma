@@ -1,0 +1,139 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SessionType {
+  PRACTICE
+  QUALIFYING
+  SPRINT_SHOOTOUT
+  SPRINT
+  RACE
+}
+
+model Circuit {
+  id         Int     @id @default(autoincrement())
+  circuitRef String  @unique
+  name       String
+  location   String
+  country    String
+  latitude   Float
+  longitude  Float
+  altitude   Int
+  url        String?
+
+  races Race[]
+}
+
+model Constructor {
+  id             Int     @id @default(autoincrement())
+  constructorRef String  @unique
+  name           String
+  nationality    String
+  url            String?
+
+  teamSeasons DriverTeamSeason[]
+  results     SessionResult[]
+}
+
+model Driver {
+  id          Int      @id @default(autoincrement())
+  driverRef   String   @unique
+  code        String?
+  firstName   String
+  lastName    String
+  nationality String
+  dateOfBirth DateTime
+  url         String?
+
+  teamSeasons DriverTeamSeason[]
+  results     SessionResult[]
+}
+
+model DriverTeamSeason {
+  id            Int @id @default(autoincrement())
+  driverId      Int
+  seasonId      Int
+  constructorId Int
+  number        Int
+
+  driver      Driver      @relation(fields: [driverId], references: [id])
+  season      Season      @relation(fields: [seasonId], references: [id])
+  constructor Constructor @relation(fields: [constructorId], references: [id])
+
+  @@unique([driverId, seasonId, constructorId])
+}
+
+model Race {
+  id        Int       @id @default(autoincrement())
+  seasonId  Int
+  round     Int
+  circuitId Int
+  name      String
+  date      DateTime
+  time      DateTime?
+  url       String?
+
+  circuit Circuit  @relation(fields: [circuitId], references: [id])
+  season  Season   @relation(fields: [seasonId], references: [id])
+  sessions RaceSession[]
+
+  @@unique([seasonId, round])
+}
+
+model RaceSession {
+  id     Int         @id @default(autoincrement())
+  raceId Int
+  type   SessionType
+  date   DateTime?
+  time   DateTime?
+
+  race        Race        @relation(fields: [raceId], references: [id])
+  results     SessionResult[]
+
+  @@unique([raceId, type])
+}
+
+model Season {
+  id   Int     @id @default(autoincrement())
+  year Int     @unique
+  url  String?
+
+  driverTeamSeasons DriverTeamSeason[]
+  races             Race[]
+}
+
+model SessionResult {
+  id             Int     @id @default(autoincrement())
+  raceSessionId  Int
+  driverId       Int
+  constructorId  Int
+
+  position       Int?
+  grid           Int?
+  points         Float?
+  laps           Int?
+  status         String?
+
+  fastestLap     Int?
+  fastestLapTime String?
+
+  q1             String?
+  q2             String?
+  q3             String?
+
+  raceSession RaceSession @relation(fields: [raceSessionId], references: [id])
+  driver      Driver      @relation(fields: [driverId], references: [id])
+  constructor Constructor @relation(fields: [constructorId], references: [id])
+
+  @@unique([raceSessionId, driverId])
+}
