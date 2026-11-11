@@ -14,10 +14,22 @@ const config: Config = {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: '.',
   testRegex: '.*\\.spec\\.ts$',
+  extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.ts$': [
+      'ts-jest',
+      {
+        useESM: true,
+        tsconfig: 'tsconfig.spec.json',
+      },
+    ],
   },
-  moduleNameMapper: pathsToModuleNameMapper(paths, { prefix: '<rootDir>/' }),
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+    ...pathsToModuleNameMapper(paths, {
+      prefix: '<rootDir>/',
+    }),
+  },
   collectCoverageFrom: [
     'src/**/*.(t|j)s',
     'libs/**/*.(t|j)s',
