@@ -83,24 +83,25 @@ model Race {
   time      DateTime?
   url       String?
 
-  circuit Circuit  @relation(fields: [circuitId], references: [id])
-  season  Season   @relation(fields: [seasonId], references: [id])
+  circuit  Circuit       @relation(fields: [circuitId], references: [id])
+  season   Season        @relation(fields: [seasonId], references: [id])
   sessions RaceSession[]
 
   @@unique([seasonId, round])
 }
 
 model RaceSession {
-  id     Int         @id @default(autoincrement())
-  raceId Int
-  type   SessionType
-  date   DateTime?
-  time   DateTime?
+  id            Int         @id @default(autoincrement())
+  raceId        Int
+  type          SessionType
+  sessionNumber Int         @default(1)
+  date          DateTime?
+  time          DateTime?
 
-  race        Race        @relation(fields: [raceId], references: [id])
-  results     SessionResult[]
+  race    Race            @relation(fields: [raceId], references: [id])
+  results SessionResult[]
 
-  @@unique([raceId, type])
+  @@unique([raceId, type, sessionNumber])
 }
 
 model Season {
@@ -113,23 +114,23 @@ model Season {
 }
 
 model SessionResult {
-  id             Int     @id @default(autoincrement())
-  raceSessionId  Int
-  driverId       Int
-  constructorId  Int
+  id            Int @id @default(autoincrement())
+  raceSessionId Int
+  driverId      Int
+  constructorId Int
 
-  position       Int?
-  grid           Int?
-  points         Float?
-  laps           Int?
-  status         String?
+  position Int?
+  grid     Int?
+  points   Float?
+  laps     Int?
+  status   String?
 
   fastestLap     Int?
   fastestLapTime String?
 
-  q1             String?
-  q2             String?
-  q3             String?
+  q1 String?
+  q2 String?
+  q3 String?
 
   raceSession RaceSession @relation(fields: [raceSessionId], references: [id])
   driver      Driver      @relation(fields: [driverId], references: [id])
