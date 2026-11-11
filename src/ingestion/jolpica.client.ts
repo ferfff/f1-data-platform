@@ -2,13 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 
-interface JolpicaResponse {
-  MRData: {
-    limit: string;
-    offset: string;
-    total: string;
-    [key: string]: unknown;
-  };
+interface JolpicaConstructor {
+  constructorId: string;
+  name: string;
+  nationality: string;
+  url: string;
+}
+
+interface JolpicaDriver {
+  code?: string;
+  dateOfBirth: string;
+  driverId: string;
+  familyName: string;
+  givenName: string;
+  nationality: string;
+  permanentNumber?: string;
+  url: string;
 }
 
 interface JolpicaRace {
@@ -29,24 +38,39 @@ interface JolpicaRace {
   season: string;
   time?: string;
   url: string;
+  Results?: JolpicaRaceResult[];
 }
 
-interface JolpicaConstructor {
-  constructorId: string;
-  name: string;
-  nationality: string;
-  url: string;
+interface JolpicaRaceResult {
+  Constructor: JolpicaConstructor;
+  Driver: JolpicaDriver;
+  FastestLap?: {
+    Time?: {
+      time: string;
+    };
+    lap: string;
+    rank: string;
+  };
+  grid: string;
+  laps: string;
+  number: string;
+  points: string;
+  position: string;
+  positionText: string;
+  status: string;
+  Time?: {
+    millis: string;
+    time: string;
+  };
 }
 
-interface JolpicaDriver {
-  code?: string;
-  dateOfBirth: string;
-  driverId: string;
-  familyName: string;
-  givenName: string;
-  nationality: string;
-  permanentNumber?: string;
-  url: string;
+interface JolpicaResponse {
+  MRData: {
+    limit: string;
+    offset: string;
+    total: string;
+    [key: string]: unknown;
+  };
 }
 
 @Injectable()
@@ -109,6 +133,20 @@ export class JolpicaClient {
     return this.get<JolpicaDriver>(
       `${year}/drivers`,
       'DriverTable.Drivers',
+    );
+  }
+
+  async getSeasonRaces(year: number): Promise<JolpicaRace[]> {
+    return this.get<JolpicaRace>(
+      `${year}`,
+      'RaceTable.Races',
+    );
+  }
+
+  async getSeasonResults(year: number): Promise<JolpicaRace[]> {
+    return this.get<JolpicaRace>(
+      `${year}/results`,
+      'RaceTable.Races',
     );
   }
 }

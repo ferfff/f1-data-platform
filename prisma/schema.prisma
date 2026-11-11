@@ -41,7 +41,7 @@ model Circuit {
   country    String
   latitude   Float
   longitude  Float
-  altitude   Int
+  altitude   Int?
   url        String?
 
   races Race[]
