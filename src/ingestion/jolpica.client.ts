@@ -12,23 +12,23 @@ interface JolpicaResponse {
 }
 
 interface JolpicaRace {
-    Circuit: {
-        circuitId: string;
-        circuitName: string;
-        Location: {
-            country: string;
-            lat: string;
-            long: string;
-            locality: string;
-        };
-        url: string;
+  Circuit: {
+    circuitId: string;
+    circuitName: string;
+    Location: {
+      country: string;
+      lat: string;
+      long: string;
+      locality: string;
     };
-    date: string;
-    raceName: string;
-    round: string;
-    season: string;
-    time?: string;
     url: string;
+  };
+  date: string;
+  raceName: string;
+  round: string;
+  season: string;
+  time?: string;
+  url: string;
 }
 
 interface JolpicaConstructor {
@@ -54,7 +54,7 @@ export class JolpicaClient {
   private readonly baseUrl = 'https://api.jolpi.ca/ergast/f1';
   private readonly limit = 100;
 
-  constructor(private readonly httpService: HttpService) {}
+  constructor(private readonly httpService: HttpService) { }
 
   async get<T>(path: string, collectionPath: string): Promise<T[]> {
     const results: T[] = [];

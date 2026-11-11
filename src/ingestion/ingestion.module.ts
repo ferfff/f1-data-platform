@@ -7,8 +7,8 @@ import { HttpModule } from '@nestjs/axios';
 import { JolpicaClient } from './jolpica.client';
 
 @Module({
-  imports: [AuthModule, PrismaModule],
-  providers: [IngestionService],
+  imports: [AuthModule, PrismaModule, HttpModule],
+  providers: [IngestionService, JolpicaClient],
   controllers: [IngestionController],
 })
 export class IngestionModule {}
