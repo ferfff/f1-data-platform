@@ -1,5 +1,5 @@
 {
-  "name": "webhook-hub",
+  "name": "f1-data-platform",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -35,7 +35,6 @@
   },
   "devDependencies": {
     "@nestjs/cli": "^12.0.0",
-    "@nestjs/mau": "^0.0.6",
     "@nestjs/schematics": "^12.0.0",
     "@nestjs/testing": "^12.0.1",
     "@types/express": "^5.0.0",

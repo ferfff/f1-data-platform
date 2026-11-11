@@ -1,132 +1,160 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# F1 Data Platform
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A Formula 1 data platform built with NestJS, TypeScript, Prisma, and PostgreSQL, designed to expose historical F1 data through a REST API and support motorsport analytics with Power BI.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Project Overview
 
-## Description
+F1 Data Platform is a backend project focused on collecting, organizing, and exposing Formula 1 historical data.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The platform will provide a structured API for accessing information about drivers, constructors, circuits, seasons, races, and race results.
 
-## Project setup
+The long-term goal is to integrate historical F1 data with Power BI to build analytics dashboards covering championship performance, race statistics, and driver and constructor comparisons.
 
-```bash
-$ npm install
-```
+## Technology Stack
 
-## Compile and run the project
+- **Backend:** NestJS 12
+- **Language:** TypeScript
+- **Database:** PostgreSQL 17
+- **ORM:** Prisma 7
+- **Infrastructure:** Docker
+- **Testing:** Jest and Supertest
+- **Analytics:** Power BI (planned)
 
-```bash
-# development
-$ npm run start
+## Architecture
 
-# watch mode
-$ npm run start:dev
+The project follows a modular architecture:
 
-# production mode
-$ npm run start:prod
-```
+- **REST API:** Exposes read endpoints for Formula 1 data.
+- **Database:** PostgreSQL stores structured historical F1 information.
+- **ORM:** Prisma manages database access, schema, and migrations.
+- **Data ingestion (planned):** A separate service will retrieve and synchronize data from external Formula 1 APIs.
+- **Analytics (planned):** Power BI will consume the platform's data for reporting and visualization.
 
-## Run tests
+### Data Sources
 
-```bash
-# unit tests
-$ npm run test
+- [Jolpica-F1 API](https://github.com/jolpica/jolpica-f1): Primary source for historical Formula 1 data dating back to 1950.
+- [OpenF1 API](https://openf1.org/): Complementary source for detailed telemetry and session data, primarily from 2023 onward.
 
-# e2e tests
-$ npm run test:e2e
+## Prerequisites
 
-# test coverage
-$ npm run test:cov
-```
+- Node.js 22+
+- npm
+- Docker and Docker Compose
+- Git
 
-## Deployment
+## Getting Started
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### 1. Clone the repository
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+git clone git@github.com:ferfff/f1-data-platform.git
+cd f1-data-platform
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Observability
-
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
-
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
-
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
-
-To add it to this project, run this and approve the code it prints at [observe.nestjs.com/link](https://observe.nestjs.com/link) - signing up for free if you have no account:
+### 2. Install dependencies
 
 ```bash
-$ npx @nestjs/observe link
+npm install
 ```
 
-It installs `@nestjs/observe`, wires it into `AppModule` and `main.ts`, and writes the app key and secret into `.env`, which every `nest start` script (`start`, `start:dev`, `start:debug`) then loads. In production, set `OBSERVE_APP_KEY` and `OBSERVE_APP_SECRET` in the environment instead.
+### 3. Configure environment variables
 
-Or do it by hand:
+Create a `.env` file in the project root:
+
+```env
+DATABASE_URL="postgresql://webhook_user:webhook_password@localhost:5433/webhook_hub?schema=public"
+```
+
+Use your local PostgreSQL configuration if it differs from the example above.
+
+### 4. Start PostgreSQL
 
 ```bash
-$ npm install @nestjs/observe
+docker compose up -d
 ```
 
-Then follow the [setup guide](https://docs.nestjs.com/observability/sdk) - it takes a single import and an app key.
+### 5. Apply database migrations
 
-The free plan needs no payment details and covers 300,000 events a month. You can also browse the [live demo](https://www.observe-demo.nestjs.com/dashboard) first - the whole dashboard over a busy service's data, with nothing to install.
+```bash
+npx prisma migrate dev
+```
 
-## Resources
+### 6. Generate Prisma Client
 
-Check out a few resources that may come in handy when working with NestJS:
+```bash
+npx prisma generate
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observe](https://observe.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### 7. Start the development server
 
-## Support
+```bash
+npm run start:dev
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+The API will be available at:
 
-## Stay in touch
+`http://localhost:3000`
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## Available Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/health` | Checks API and database connectivity |
+
+Additional Formula 1 endpoints will be documented as they are implemented.
+
+## Testing
+
+Run unit tests:
+
+```bash
+npm test -- --runInBand
+```
+
+Run end-to-end tests:
+
+```bash
+npm run test:e2e -- --runInBand
+```
+
+Build the application:
+
+```bash
+npm run build
+```
+
+## Database Management
+
+Open Prisma Studio:
+
+```bash
+npx prisma studio
+```
+
+Create a migration after modifying the Prisma schema:
+
+```bash
+npx prisma migrate dev --name migration_name
+```
+
+## Roadmap
+
+- [x] NestJS project initialization
+- [x] PostgreSQL Docker configuration
+- [x] Prisma integration
+- [x] Initial database schema
+- [x] Health check endpoint
+- [x] Unit and end-to-end testing
+- [ ] Drivers REST API
+- [ ] Constructors REST API
+- [ ] Circuits and seasons REST APIs
+- [ ] Races and results REST APIs
+- [ ] Historical data ingestion
+- [ ] OpenF1 integration
+- [ ] Power BI dashboards
+- [ ] AWS deployment
+- [ ] CI/CD pipeline
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the MIT License.
