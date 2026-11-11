@@ -1,4 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { 
+    Controller, 
+    Get,
+    Param,
+    ParseIntPipe,
+} from '@nestjs/common';
 import { DriversService } from './drivers.service';
 
 @Controller('drivers')
@@ -11,7 +16,7 @@ export class DriversController {
     }
 
     @Get(':id')
-    findOne(id: number) {
+    findOne(@Param('id', ParseIntPipe) id: number) {
         return this.driversService.findOne(id);
     }
 }

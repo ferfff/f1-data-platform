@@ -28,6 +28,19 @@ describe('AppController (e2e)', () => {
       });
   });
 
+  it('/drivers (GET)', async () => {
+    return request(app.getHttpServer())
+      .get('/drivers')
+      .expect(200)
+      .expect(Array);
+  });
+
+  it('/drivers/abc (GET) should return 400', async () => {
+    return request(app.getHttpServer())
+      .get('/drivers/abc')
+      .expect(400);
+  });
+
   afterAll(async () => {
     await app.close();
   });
