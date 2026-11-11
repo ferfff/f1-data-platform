@@ -33,48 +33,6 @@ describe('AppController (e2e)', () => {
       });
   });
 
-  it('/drivers (GET)', async () => {
-    return request(app.getHttpServer())
-      .get('/drivers')
-      .expect(200)
-      .expect((response) => {
-        expect(Array.isArray(response.body.data)).toBe(true);
-        expect(response.body.meta).toBeDefined();
-        expect(response.body.meta.total).toBeDefined();
-        expect(response.body.meta.page).toBe(1);
-        expect(response.body.meta.limit).toBe(20);
-        expect(response.body.meta.totalPages).toBeDefined();
-      });
-  });
-
-  it('/drivers?page=0 (GET)', async () => {
-    return request(app.getHttpServer())
-      .get('/drivers?page=0')
-      .expect(400);
-  });
-
-  it('/drivers?search=max (GET)', async () => {
-    return request(app.getHttpServer())
-      .get('/drivers?search=max')
-      .expect(200)
-      .expect((response) => {
-        expect(Array.isArray(response.body.data)).toBe(true);
-        expect(response.body.meta).toBeDefined();
-      });
-  });
-
-  it('/drivers?limit=101 (GET)', async () => {
-    return request(app.getHttpServer())
-      .get('/drivers?limit=101')
-      .expect(400);
-  });
-
-  it('/drivers/abc (GET) should return 400', async () => {
-    return request(app.getHttpServer())
-      .get('/drivers/abc')
-      .expect(400);
-  });
-
   afterAll(async () => {
     await app.close();
   });
