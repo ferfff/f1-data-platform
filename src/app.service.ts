@@ -5,7 +5,7 @@ export class AppService {
   getHealth() {
     return {
       status: 'OK',
-      service: 'webhook-hub',
+      service: 'f1-data-platform',
       timestamp: new Date().toISOString(),
     };
   }
