@@ -11,9 +11,10 @@ import { ResultsModule } from './results/results.module';
 import { RaceSessionsModule } from './race-sessions/race-sessions.module';
 import { DriverTeamSeasonsModule } from './driver-team-seasons/driver-team-seasons.module';
 import { AuthModule } from './auth/auth.module';
+import { IngestionModule } from './ingestion/ingestion.module';
 
 @Module({
-  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule, RacesModule, ResultsModule, RaceSessionsModule, DriverTeamSeasonsModule, AuthModule],
+  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule, RacesModule, ResultsModule, RaceSessionsModule, DriverTeamSeasonsModule, AuthModule, IngestionModule],
   controllers: [AppController],
   providers: [AppService],
 })
