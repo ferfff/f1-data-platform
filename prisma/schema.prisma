@@ -20,6 +20,11 @@ enum SessionType {
   RACE
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
 model Circuit {
   id         Int     @id @default(autoincrement())
   circuitRef String  @unique
@@ -66,7 +71,6 @@ model DriverTeamSeason {
   driverId      Int
   seasonId      Int
   constructorId Int
-  number        Int
 
   driver      Driver        @relation(fields: [driverId], references: [id])
   season      Season        @relation(fields: [seasonId], references: [id])
@@ -121,6 +125,7 @@ model SessionResult {
   driverId      Int
   constructorId Int
 
+  number   Int?
   position Int?
   grid     Int?
   points   Float?
@@ -128,6 +133,7 @@ model SessionResult {
   status   String?
 
   fastestLap     Int?
+  fastestLapRank Int?
   fastestLapTime String?
 
   q1 String?
@@ -139,4 +145,14 @@ model SessionResult {
   constructor F1Constructor @relation(fields: [constructorId], references: [id])
 
   @@unique([raceSessionId, driverId])
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(USER)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }

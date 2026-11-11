@@ -10,9 +10,10 @@ import { RacesModule } from './races/races.module';
 import { ResultsModule } from './results/results.module';
 import { RaceSessionsModule } from './race-sessions/race-sessions.module';
 import { DriverTeamSeasonsModule } from './driver-team-seasons/driver-team-seasons.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
-  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule, RacesModule, ResultsModule, RaceSessionsModule, DriverTeamSeasonsModule],
+  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule, RacesModule, ResultsModule, RaceSessionsModule, DriverTeamSeasonsModule, AuthModule],
   controllers: [AppController],
   providers: [AppService],
 })
