@@ -5,9 +5,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { DriversModule } from './drivers/drivers.module';
 import { ConstructorsModule } from './constructors/constructors.module';
 import { CircuitsModule } from './circuits/circuits.module';
+import { SeasonsModule } from './seasons/seasons.module';
 
 @Module({
-  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule],
+  imports: [PrismaModule, DriversModule, ConstructorsModule, CircuitsModule, SeasonsModule],
   controllers: [AppController],
   providers: [AppService],
 })
