@@ -34,7 +34,7 @@ model Circuit {
   races Race[]
 }
 
-model Constructor {
+model F1Constructor {
   id             Int     @id @default(autoincrement())
   constructorRef String  @unique
   name           String
@@ -43,6 +43,8 @@ model Constructor {
 
   teamSeasons DriverTeamSeason[]
   results     SessionResult[]
+
+  @@map("Constructor")
 }
 
 model Driver {
@@ -66,9 +68,9 @@ model DriverTeamSeason {
   constructorId Int
   number        Int
 
-  driver      Driver      @relation(fields: [driverId], references: [id])
-  season      Season      @relation(fields: [seasonId], references: [id])
-  constructor Constructor @relation(fields: [constructorId], references: [id])
+  driver      Driver        @relation(fields: [driverId], references: [id])
+  season      Season        @relation(fields: [seasonId], references: [id])
+  constructor F1Constructor @relation(fields: [constructorId], references: [id])
 
   @@unique([driverId, seasonId, constructorId])
 }
@@ -132,9 +134,9 @@ model SessionResult {
   q2 String?
   q3 String?
 
-  raceSession RaceSession @relation(fields: [raceSessionId], references: [id])
-  driver      Driver      @relation(fields: [driverId], references: [id])
-  constructor Constructor @relation(fields: [constructorId], references: [id])
+  raceSession RaceSession   @relation(fields: [raceSessionId], references: [id])
+  driver      Driver        @relation(fields: [driverId], references: [id])
+  constructor F1Constructor @relation(fields: [constructorId], references: [id])
 
   @@unique([raceSessionId, driverId])
 }
